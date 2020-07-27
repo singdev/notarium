@@ -1,0 +1,22 @@
+version: '2'
+services:
+  localhost:
+        image: mysql:8.0
+        container_name: mysql-server-80
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+          - .:/application
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_DATABASE=registration
+          - MYSQL_USER=root
+          - MYSQL_PASSWORD=
+  website:
+    container_name: php72
+    build:
+      context: ./
+    ports:
+      - 1543:80
+    links:
+      - localhost
